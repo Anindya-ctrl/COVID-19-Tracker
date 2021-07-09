@@ -1,0 +1,16 @@
+{
+    "circleConfigForCaseTypes": {
+        "cases": {
+            "color": "hsl(0, 100%, 50%)",
+            "multiplier": 300
+        },
+        "recovered": {
+            "color": "hsl(89, 76%, 48%)",
+            "multiplier": 350
+        },
+        "deaths": {
+            "color": "hsl(349, 85%, 43%)",
+            "multiplier": 1200
+        }
+    }
+}

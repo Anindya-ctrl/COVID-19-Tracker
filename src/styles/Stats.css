@@ -1,0 +1,12 @@
+.stats {
+    display: flex;
+    justify-content: space-between;
+}
+
+.stats .MuiPaper-root {
+    cursor: pointer;
+}
+
+.active-info-box {
+    border-top: 10px solid green;
+}

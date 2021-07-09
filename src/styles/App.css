@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+}
+
+:root {
+    --shady-background: #f3f2f8;
+}
+
+body {
+    background-color: var(--shady-background);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.app {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+}
+
+.left-segment {
+    flex: 0.8;
+    min-width: 480px;
+}
+
+.right-segment {
+    min-width: 480px;
+}
+
+.drop-down {
+    background-color: hsl(0, 0%, 100%);
+}
+
+@media all and (max-width: 1000px) {
+    .app {
+        flex-direction: column;
+    }
+    .left-segment {
+        margin-bottom: 20px;
+    }
+}
