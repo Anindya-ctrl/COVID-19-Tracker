@@ -1,29 +1,38 @@
 import React from 'react';
-import { MapContainer, TileLayer, Circle, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Circle, Popup, useMap } from 'react-leaflet';
 import { formatLongNumber } from '../utilities/utilities';
 import { circleConfigForCaseTypes } from '../utilities/utilities.json';
 import '../styles/Map.css'
 
-function Map({ center, zoom, dataType, countryList }) {
+function Map({ dataType, countryList, mapCenter, mapZoom }) {
+    function ChangeMapView({ newCenter, newZoom }) {
+        const map = useMap();
+        map.setView(newCenter, map.getZoom());
+        map.setView(newCenter, newZoom);
+      
+        return null;
+    }
+
     return (
         <div className="map">
             <MapContainer
-                center={ center }
-                zoom={ zoom }
+                center={ mapCenter }
+                zoom={ mapZoom }
             >
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 />
-
                 {
                     countryList.length && countryList.map((country, index) => (
                         <Circle
                             key={ index }
+                            pathOptions={{
+                                color: circleConfigForCaseTypes[dataType].color,
+                                fillColor: circleConfigForCaseTypes[dataType].color,
+                            }}
                             center={[ country.countryInfo.lat, country.countryInfo.long ]}
                             fillOpacity={ 0.4 }
-                            color={ circleConfigForCaseTypes[dataType].color }
-                            fillColor={ circleConfigForCaseTypes[dataType].color }
                             radius={ Math.sqrt(country[dataType]) * circleConfigForCaseTypes[dataType].multiplier }
                         >
                             <Popup>
@@ -41,6 +50,7 @@ function Map({ center, zoom, dataType, countryList }) {
                         </Circle>
                     ))
                 }
+                <ChangeMapView newCenter={ mapCenter } newZoom={ mapZoom } />
             </MapContainer>
         </div>
     );

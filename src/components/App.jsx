@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Graph from './Graph';
 import Map from './Map';
 import Table from './Table';
@@ -14,14 +14,17 @@ import 'leaflet/dist/leaflet.css';
 
 function App() {
     const [ selectedCountry, setSelectedCountry ] = useState('Global');
+    const [ dataType, setDataType ] = useState('cases');
     const [ mapCenter, setMapCenter ] = useState([10, 10]);
     const [ mapZoom, setMapZoom ] = useState(2);
-    const [ dataType, setDataType ] = useState('cases');
     const { countryList, selectedCountryStats } = useCountries(selectedCountry);
+
+    useEffect(() => {
+        selectedCountryStats.countryInfo && setMapCenter(() => [selectedCountryStats.countryInfo.lat, selectedCountryStats.countryInfo.long]);
+    }, [ selectedCountryStats ]);
 
     const handleCountryChange = event => {
         setSelectedCountry(event.target.value);
-        selectedCountryStats.countryInfo && setMapCenter([selectedCountryStats.countryInfo.lat, selectedCountryStats.countryInfo.long]);
         setMapZoom(4);
     }
 
@@ -84,7 +87,12 @@ function App() {
                 </div>
 
                 {/* MAP */}
-                <Map center={ mapCenter } zoom={ mapZoom } dataType={ dataType } countryList={ countryList } />
+                <Map
+                    mapCenter={ mapCenter }
+                    mapZoom={ mapZoom }
+                    dataType={ dataType }
+                    countryList={ countryList }
+                />
             </div>
 
             <Card className="right-segment">
